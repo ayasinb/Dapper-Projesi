@@ -1,0 +1,32 @@
+﻿@model List<DapperNight.Dtos.ProductDtos.ResultProductWithCategoryDto>
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <br /><br />
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Ürün Adı</th>
+            <th>Stok</th>
+            <th>Fiyat</th>
+            <th>Kategori Adı</th>
+            
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@item.CategoryName</td>
+                
+            </tr>
+        }
+    </table>
+    
+</div>

@@ -40,7 +40,23 @@ namespace DapperNight.Services.ProductServices
             string query = "Select * From TblProduct";
             var connection = _context.CreateConnection();
             var values = await connection.QueryAsync<ResultProductDto>(query);    
-            return values.ToList(); ;
+            return values.ToList(); 
+        }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
+        {
+            string query = "SELECT dbo.TblProduct.ProductId, dbo.TblProduct.Name, dbo.TblCategory.CategoryName, dbo.TblProduct.Quantity, dbo.TblProduct.Price FROM   dbo.TblProduct INNER JOIN dbo.TblCategory ON dbo.TblProduct.CategoryId = dbo.TblCategory.CategoryId";
+            var connection = _context.CreateConnection();
+            var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+            return values.ToList();
+        }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryProcAsync()
+        {
+            string query = "Execute ProductList";
+            var connection = _context.CreateConnection();
+            var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+            return values.ToList();
         }
 
         public async Task<GetByIdProductDto> GetByIdProductAsync(int id)
@@ -51,6 +67,14 @@ namespace DapperNight.Services.ProductServices
             var connection = _context.CreateConnection();
             var value = await connection.QueryFirstOrDefaultAsync<GetByIdProductDto>(query, parameters);
             return value;
+        }
+
+        public async Task<int> GetProductCountAsync()
+        {
+            string query = "Select count(*) from TblProduct";
+            var connection = _context.CreateConnection();
+            int productCount=await connection.QueryFirstAsync<int>(query);
+            return productCount;
         }
 
         public async Task UpdateProductAsync(UpdateProductDto updateProductDto)
